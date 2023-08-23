@@ -23,16 +23,16 @@ const KpiCards = () => {
     return (
         <div className="kpiCardsContainer">
             <div className="widgets">
-                {kpis ? (
+                {kpis !== null && (
                     <>
-                        <Widget type={kpis.users.title} quantity={kpis.users.quantity} />
-                        <Widget type={kpis.smsNotifications.title} quantity={kpis.smsNotifications.quantity} />
-                        <Widget type={kpis.emailNotifications.title} quantity={kpis.emailNotifications.quantity} />
-                        <Widget type={kpis.pushNotifications.title} quantity={kpis.pushNotifications.quantity} />
+                        {kpis.users !== null && <Widget type={kpis.users.title} quantity={kpis.users.quantity} />}
+                        {kpis.smsNotifications !== null && <Widget type={kpis.smsNotifications.title} quantity={kpis.smsNotifications.quantity} />}
+                        {kpis.emailNotifications !== null && <Widget type={kpis.emailNotifications.title} quantity={kpis.emailNotifications.quantity} />}
+                        {kpis.pushNotifications !== null && <Widget type={kpis.pushNotifications.title} quantity={kpis.pushNotifications.quantity} />}
                     </>
-                ) : (
-                    <p>Loading KPIs...</p>
                 )}
+                {kpis === null && <p>Loading KPIs...</p>}
+                {kpis !== null && Object.values(kpis).every(val => val === null) && <p>No notifications sent yet.</p>}
             </div>
         </div>
     );
