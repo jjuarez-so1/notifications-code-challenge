@@ -1,6 +1,7 @@
 gila-api/target/
 gila-api/build/
 gila-api/.mvn
+gila-api/.idea/
 
 gila-front/node_modules/
 gila-front/build/

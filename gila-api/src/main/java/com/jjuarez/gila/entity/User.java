@@ -122,4 +122,38 @@ public class User {
     public boolean prefersChannel(BroadcastChannel channel) {
         return preferredChannels.contains(channel);
     }
+
+    public static class Builder {
+        private final User user;
+        public Builder() {
+            user = new User();
+        }
+        public Builder name(final String name) {
+            user.setName(name);
+            return this;
+        }
+        public Builder email(final String email) {
+            user.setEmail(email);
+            return this;
+        }
+
+        public Builder phone(final String phone) {
+            user.setPhone(phone);
+            return this;
+        }
+
+        public Builder subscribedTopics(final List<Topic> subscribedTopics) {
+            user.setSubscribedTopics(subscribedTopics);
+            return this;
+        }
+
+        public Builder preferredChannels(final List<BroadcastChannel> preferredChannels) {
+            user.setPreferredChannels(preferredChannels);
+            return this;
+        }
+
+        public User build() {
+            return user;
+        }
+    }
 }

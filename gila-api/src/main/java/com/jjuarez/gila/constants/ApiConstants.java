@@ -9,4 +9,7 @@ public class ApiConstants {
     public static final String CATEGORY_REGEX_PATTERN = "SPORTS|FINANCE|FILMS";
     public static final int MIN_RANDOM_DELAY = 500;
     public static final int MAX_RANDOM_DELAY = 3000;
+
+    public static final int MIN_APP_USERS = 100;
+    public static final int MAX_APP_USERS = 500;
 }

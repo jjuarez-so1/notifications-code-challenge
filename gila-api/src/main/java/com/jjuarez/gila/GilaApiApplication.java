@@ -1,5 +1,6 @@
 package com.jjuarez.gila;
 
+import com.jjuarez.gila.constants.ApiConstants;
 import com.jjuarez.gila.entity.BroadcastChannel;
 import com.jjuarez.gila.entity.Topic;
 import com.jjuarez.gila.entity.User;
@@ -14,11 +15,11 @@ import org.springframework.context.event.EventListener;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 @SpringBootApplication
 public class GilaApiApplication {
@@ -27,9 +28,45 @@ public class GilaApiApplication {
 		SpringApplication.run(GilaApiApplication.class, args);
 	}
 
+	private final UserRepository userRepository;
+	private final TopicRepository topicRepository;
+	private final BroadcastChannelRepository broadcastChannelRepository;
+
+	public GilaApiApplication(final UserRepository userRepository, final TopicRepository topicRepository,
+							  final BroadcastChannelRepository broadcastChannelRepository) {
+		this.userRepository = userRepository;
+		this.topicRepository = topicRepository;
+		this.broadcastChannelRepository = broadcastChannelRepository;
+	}
+
 	@EventListener
 	public void seed(ContextRefreshedEvent event) {
-		// here could be done something using repositories and classes
+		final Random random = new Random();
+
+		final int numUsers = random.nextInt(ApiConstants.MAX_APP_USERS - ApiConstants.MIN_APP_USERS + 1)
+				+ ApiConstants.MIN_APP_USERS;
+
+		final List<Topic> allTopics = topicRepository.findAll();
+		final List<BroadcastChannel> allChannels = broadcastChannelRepository.findAll();
+
+		IntStream.range(0, numUsers).forEach(i -> {
+			List<Topic> userSubscribedTopics = new ArrayList<>();
+			List<BroadcastChannel> userPreferredChannels = new ArrayList<>();
+
+			allTopics.stream().filter(topic -> random.nextBoolean()).forEach(userSubscribedTopics::add);
+
+			allChannels.stream().filter(channel -> random.nextBoolean()).forEach(userPreferredChannels::add);
+
+			User user = new User.Builder()
+					.name("User " + i)
+					.email("user" + i + "@example.com")
+					.phone("0123456789")
+					.subscribedTopics(userSubscribedTopics)
+					.preferredChannels(userPreferredChannels)
+					.build();
+
+			userRepository.save(user);
+		});
 	}
 
 	@Bean
