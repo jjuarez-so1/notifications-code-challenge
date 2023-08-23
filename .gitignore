@@ -1,0 +1,8 @@
+gila-api/target/
+gila-api/build/
+gila-api/.mvn
+
+gila-front/node_modules/
+gila-front/build/
+gila-front/.cache/
+

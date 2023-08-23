@@ -1,0 +1,23 @@
+version: '3'
+services:
+  gila-api:
+    build:
+      context: gila-api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Expose port 8080 of the container
+    networks:
+      - gila-network
+
+  gila-front:
+    build:
+      context: gila-front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Expose port 3000 of the container
+    networks:
+      - gila-network
+
+networks:
+  gila-network:
+

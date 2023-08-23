@@ -1,0 +1,44 @@
+.widgett {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    padding: 10px;
+    
+    box-shadow: 6px 6px 5px -1px rgba(0,0,0,0.18);
+    -webkit-box-shadow: 6px 6px 5px -1px rgba(0,0,0,0.18);
+    -moz-box-shadow: 6px 6px 5px -1px rgba(0,0,0,0.18);
+
+    border-radius: 10px;
+    height: 120px;
+
+    .leftt,
+    .rightt {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .titlee {
+            font-weight: bold;
+            font-size: 15px;
+            color: rgb(160, 160, 107)
+        }
+
+        .counterr {
+            font-size: 40px;
+            font-weight: 300;
+        }
+
+        .linkk {
+            border-bottom: 1px solid gray;
+            font-size: 12px;
+            width: max-content;
+        }
+    }
+
+    .rightt {
+        width: 40%;
+        .icon {
+            font-size: 95px;
+        }
+    }
+}
