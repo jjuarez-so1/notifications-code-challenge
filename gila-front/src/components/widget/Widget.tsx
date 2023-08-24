@@ -1,11 +1,23 @@
-import "./widget.scss"
+import React from "react";
+import "./widget.scss";
+
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import VibrationOutlinedIcon from '@mui/icons-material/VibrationOutlined';
 import ForwardToInboxOutlinedIcon from '@mui/icons-material/ForwardToInboxOutlined';
 import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
 
-const Widget = ({ type, quantity }) => {
-    let data;
+interface WidgetProps {
+    type: string;
+    quantity: number;
+  }
+
+  const Widget: React.FC<WidgetProps> = ({ type, quantity }) => {
+    let data = {
+        title: "",
+        icon: null as JSX.Element | null,
+
+      };
+
     switch (type) {
         case "USERS":
             data = {

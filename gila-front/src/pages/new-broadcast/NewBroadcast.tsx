@@ -1,3 +1,4 @@
+import React from "react";
 import "./new-broadcast.scss"
 
 import { useEffect, useState } from "react";
@@ -5,9 +6,18 @@ import List from "../../components/list/List"
 import axios from "axios";
 import NewBroadcastForm from "../../components/new-broadcast-form/NewBroadcastForm";
 
+interface Notification {
+  id: number;
+  topic: string;
+  message: string;
+  status: string;
+  startTime: string;
+  endTime: string;
+}
+
 const NewBroadcast = () => {
-  const [notifications, setNotifications] = useState([]);
-  const [lastRefreshed, setLastRefreshed] = useState(null);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [lastRefreshed, setLastRefreshed] = useState(new Date());
 
   useEffect(() => {
     fetchNotifications();

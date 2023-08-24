@@ -1,20 +1,31 @@
+import React from "react";
 import "./new-broadcast-form.scss";
 
 import { useState } from "react";
 import axios from "axios";
 
-const NewBroadcastForm = ({ onBroadcast, setNotifications, lastRefreshed }) => {
+interface NewBroadcastFormProps {
+  onBroadcast: () => void;
+  setNotifications: (notifications: any) => void;
+  lastRefreshed: Date | null;
+}
+
+const NewBroadcastForm: React.FC<NewBroadcastFormProps> = ({
+  onBroadcast,
+  setNotifications,
+  lastRefreshed,
+}) => {
     const [selectedTopic, setSelectedTopic] = useState("SPORTS");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   
   
 
-  const handleTopicChange = (event) => {
+  const handleTopicChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTopic(event.target.value);
   }
 
-  const handleMessageChange = (event) => {
+  const handleMessageChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
     const newMessage = event.target.value;
     if (newMessage.length <= 110) {
       setMessage(newMessage);
@@ -22,7 +33,7 @@ const NewBroadcastForm = ({ onBroadcast, setNotifications, lastRefreshed }) => {
   }
 
 
-  const myHandleSubmit = async (event) => {
+  const myHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     setIsLoading(true);
@@ -33,7 +44,7 @@ const NewBroadcastForm = ({ onBroadcast, setNotifications, lastRefreshed }) => {
     };
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:8080/api/notifications/send",
         broadcastData
       );
@@ -68,8 +79,8 @@ const NewBroadcastForm = ({ onBroadcast, setNotifications, lastRefreshed }) => {
                             className="form-control"
                             value={message}
                             onChange={handleMessageChange}
-                            rows="1"
-                            maxLength="110"
+                            rows={1}
+                            maxLength={110}
                         />
                     </div>
                     <div className="col-md-2">

@@ -1,4 +1,6 @@
-import "./navbar.scss"
+import React from "react";
+import "./navbar.scss";
+
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 

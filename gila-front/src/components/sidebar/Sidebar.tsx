@@ -1,4 +1,6 @@
-import "./sidebar.scss"
+import React from "react";
+import "./sidebar.scss";
+
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import LayersOutlinedIcon from '@mui/icons-material/LayersOutlined';
 import LogoDevOutlinedIcon from '@mui/icons-material/LogoDevOutlined';

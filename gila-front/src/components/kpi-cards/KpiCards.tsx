@@ -1,11 +1,31 @@
+import React from "react";
 import "./kpi-cards.scss"
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Widget from "../widget/Widget"
 
+interface KpiData {
+    users: {
+      title: string;
+      quantity: number;
+    };
+    smsNotifications: {
+      title: string;
+      quantity: number;
+    };
+    emailNotifications: {
+      title: string;
+      quantity: number;
+    };
+    pushNotifications: {
+      title: string;
+      quantity: number;
+    };
+  }
+
 const KpiCards = () => {
-    const [kpis, setKpis] = useState(null);
+    const [kpis, setKpis] = useState<KpiData|null>(null);
 
     useEffect(() => {
         async function fetchKpis() {

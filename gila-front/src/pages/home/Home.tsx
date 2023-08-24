@@ -1,4 +1,6 @@
-import "./home.scss"
+import React from "react";
+import "./home.scss";
+
 import KpiCards from "../../components/kpi-cards/KpiCards"
 
 const Home = () => {

@@ -1,4 +1,6 @@
-import "./list.scss"
+import React from "react";
+import "./list.scss";
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,7 +10,23 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 
-const List = ({ notifications, setNotifications, onBroadcast, lastRefreshed }) => {
+interface Notification {
+  id: number;
+  topic: string;
+  message: string;
+  status: string;
+  startTime: string;
+  endTime: string;
+}
+
+interface ListProps {
+  notifications: Notification[];
+  setNotifications: (notifications: Notification[]) => void;
+  onBroadcast: () => void;
+  lastRefreshed: Date | null;
+}
+
+const List: React.FC<ListProps> = ({ notifications, setNotifications, onBroadcast, lastRefreshed }) => {
   const handleRefresh = () => {
     onBroadcast();
   };
