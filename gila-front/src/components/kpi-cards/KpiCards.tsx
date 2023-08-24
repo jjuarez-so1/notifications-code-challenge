@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Widget from "../widget/Widget"
 
+import { myContainer } from "../../inversify/inversify.config";
+import { TYPES } from "../../inversify/types";
+import { Warrior } from "../../inversify/interfaces";
+
 interface KpiData {
     users: {
       title: string;
@@ -36,6 +40,10 @@ const KpiCards = () => {
                 console.error("Error fetching KPIs:", error);
             }
         }
+
+        console.log('doing things');
+        const ninja = myContainer.get<Warrior>(TYPES.Warrior);
+        console.log('foo', ninja.fight());
 
         fetchKpis();
     }, []);
