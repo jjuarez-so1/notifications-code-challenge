@@ -2,74 +2,84 @@ import React from "react";
 import "./new-broadcast-form.scss";
 
 import { useState } from "react";
-import axios from "axios";
+import { myContainer } from "../../inversify/inversify.config";
+import { NotificationsRepository } from "../../inversify/interfaces";
+import { TYPES } from "../../inversify/types";
+
+interface Category {
+    value: string;
+    label: string;
+}
+
+const categories: Category[] = myContainer.get<Category[]>(TYPES.Categories);
 
 interface NewBroadcastFormProps {
-  onBroadcast: () => void;
-  setNotifications: (notifications: any) => void;
-  lastRefreshed: Date | null;
+    onBroadcast: () => void;
+    setNotifications: (notifications: any) => void;
+    lastRefreshed: Date | null;
 }
 
 const NewBroadcastForm: React.FC<NewBroadcastFormProps> = ({
-  onBroadcast,
-  setNotifications,
-  lastRefreshed,
+    onBroadcast,
+    setNotifications,
+    lastRefreshed,
 }) => {
     const [selectedTopic, setSelectedTopic] = useState("SPORTS");
-  const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  
-  
+    const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-  const handleTopicChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedTopic(event.target.value);
-  }
 
-  const handleMessageChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-    const newMessage = event.target.value;
-    if (newMessage.length <= 110) {
-      setMessage(newMessage);
+
+    const handleTopicChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedTopic(event.target.value);
     }
-  }
+
+    const handleMessageChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+        const newMessage = event.target.value;
+        if (newMessage.length <= 60) {
+            setMessage(newMessage);
+        }
+    }
 
 
-  const myHandleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+        event.preventDefault();
 
-    setIsLoading(true);
+        setIsLoading(true);
 
-    const broadcastData = {
-      category: selectedTopic,
-      message: message,
+        try {
+            const notificationsRepo = myContainer.get<NotificationsRepository>(TYPES.NotificationsRepository);
+            await notificationsRepo.sendNotification(selectedTopic, message);
+
+            setSelectedTopic(categories[0].value);
+            setMessage("");
+            setIsLoading(false);
+
+            onBroadcast();
+        } catch (error) {
+            console.error("Error sending broadcast:", error);
+            setIsLoading(false);
+        }
     };
-
-    try {
-      await axios.post(
-        "http://localhost:8080/api/notifications/send",
-        broadcastData
-      );
-      setSelectedTopic("SPORTS");
-      setMessage("");
-      setIsLoading(false);
-
-      onBroadcast();
-    } catch (error) {
-      console.error("Error sending broadcast:", error);
-      setIsLoading(false);
-    }
-  };
 
     return (
         <div className="newBroacastFormContainer">
             <h1>Send a new broadcast</h1>
-            <form className="broadcast-form" onSubmit={myHandleSubmit}>
+            <form className="broadcast-form" onSubmit={handleSubmit}>
                 <div className="row align-items-end">
                     <div className="col-md-2">
                         <label htmlFor="topic" className="labelForm">Topic:</label>
-                        <select id="topic" className="form-select" value={selectedTopic} onChange={handleTopicChange}>
-                            <option value="SPORTS">SPORTS</option>
-                            <option value="FINANCE">FINANCE</option>
-                            <option value="FILMS">FILMS</option>
+                        <select
+                            id="topic"
+                            className="form-select"
+                            value={selectedTopic}
+                            onChange={handleTopicChange}
+                        >
+                            {categories.map((category) => (
+                                <option key={category.value} value={category.value}>
+                                    {category.label}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className="col-md-8">
@@ -80,7 +90,7 @@ const NewBroadcastForm: React.FC<NewBroadcastFormProps> = ({
                             value={message}
                             onChange={handleMessageChange}
                             rows={1}
-                            maxLength={110}
+                            maxLength={60}
                         />
                     </div>
                     <div className="col-md-2">

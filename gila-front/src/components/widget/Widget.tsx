@@ -48,13 +48,13 @@ interface WidgetProps {
     }
 
     return (
-        <div className="widgett">
-            <div className="leftt">
-                <span className="titlee">{ data.title }</span>
-                <span className="counterr">{quantity}</span>
-                <span className="linkk">See details</span>
+        <div className="widget">
+            <div className="left">
+                <span className="title">{ data.title }</span>
+                <span className="counter">{quantity}</span>
+                <span className="link">See details</span>
             </div>
-            <div className="rightt">
+            <div className="right">
                 { data.icon }
             </div>
         </div>

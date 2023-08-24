@@ -1,9 +1,8 @@
-// file types.ts
-
 const TYPES = {
-    Warrior: Symbol.for("Warrior"),
-    Weapon: Symbol.for("Weapon"),
-    ThrowableWeapon: Symbol.for("ThrowableWeapon")
+    ApiBaseUrl: Symbol.for("ApiBaseUrl"),
+    KpiRepository: Symbol.for("KpiRepository"),
+    NotificationsRepository: Symbol.for("NotificationsRepository"),
+    Categories: Symbol.for("categories")
 };
 
 export { TYPES };

@@ -1,14 +1,8 @@
-// file interfaces.ts
-
-export interface Warrior {
-    fight(): string;
-    sneak(): string;
+export interface NotificationsRepository {
+    sendNotification(topic: string, message: string): Promise<void>;
 }
 
-export interface Weapon {
-    hit(): string;
-}
-
-export interface ThrowableWeapon {
-    throw(): string;
+export interface Category {
+    value: string;
+    label: string;
 }
