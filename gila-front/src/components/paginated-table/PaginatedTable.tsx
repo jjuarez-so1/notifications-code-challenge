@@ -85,7 +85,7 @@ const PaginatedTable: React.FC = () => {
   return (
     <div className="listContainer">
       <div className="row last-refresh-container">
-        <div className="col-md-5 text-end myFoo">
+        <div className="col-md-5 text-end selectContainer">
           <label className="labelForSelect">Notification: </label>
           <select id="select"
               className="form-select"

@@ -14,6 +14,9 @@ export interface Notification {
   status: string;
 }
 
+export interface MessagesRepository {
+    getMessagesByNotification(notificationId: number, page: number, pageSize: number): Promise<MessagesResponse>;
+  }
 
   export interface Message {
     channel: string;
