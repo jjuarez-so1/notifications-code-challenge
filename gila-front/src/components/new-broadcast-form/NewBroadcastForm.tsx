@@ -5,11 +5,9 @@ import { useState } from "react";
 import { myContainer } from "../../inversify/inversify.config";
 import { NotificationsRepository } from "../../inversify/interfaces";
 import { TYPES } from "../../inversify/types";
+import Category from "../../interfaces/Category";
 
-interface Category {
-    value: string;
-    label: string;
-}
+
 
 const categories: Category[] = myContainer.get<Category[]>(TYPES.Categories);
 

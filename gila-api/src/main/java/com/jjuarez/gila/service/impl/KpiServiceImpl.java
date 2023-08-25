@@ -1,11 +1,10 @@
 package com.jjuarez.gila.service.impl;
 
+import com.jjuarez.gila.constants.ApiConstants;
 import com.jjuarez.gila.dto.KPITypeDTO;
 import com.jjuarez.gila.dto.KPIsDTO;
 import com.jjuarez.gila.entity.Notification;
-import com.jjuarez.gila.repository.BroadcastChannelRepository;
 import com.jjuarez.gila.repository.NotificationRepository;
-import com.jjuarez.gila.repository.TopicRepository;
 import com.jjuarez.gila.repository.UserRepository;
 import com.jjuarez.gila.service.KpiService;
 import org.slf4j.Logger;
@@ -16,26 +15,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class KpiServiceImpl implements KpiService {
     private static final Logger LOG = LoggerFactory.getLogger(KpiServiceImpl.class);
-
     private final NotificationRepository notificationRepository;
-    private final BroadcastChannelRepository broadcastChannelRepository;
-    private final TopicRepository topicRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public KpiServiceImpl(NotificationRepository notificationRepository,
-                          BroadcastChannelRepository broadcastChannelRepository,
-                          TopicRepository topicRepository,
-                          UserRepository userRepository) {
+    public KpiServiceImpl(final NotificationRepository notificationRepository,
+                          final UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
-        this.broadcastChannelRepository = broadcastChannelRepository;
-        this.topicRepository = topicRepository;
         this.userRepository = userRepository;
     }
 
     @Override
     public KPIsDTO getKpisForLastNotification() {
-        Notification lastNotification = notificationRepository.findTopByOrderByStartTimeDesc();
+        LOG.info("Get kpis for last notification");
+        final Notification lastNotification = notificationRepository.findTopByOrderByStartTimeDesc();
 
         if (lastNotification != null) {
             return calculateKPIs(lastNotification);
@@ -44,27 +37,32 @@ public class KpiServiceImpl implements KpiService {
         return new KPIsDTO();
     }
 
-    private KPIsDTO calculateKPIs(Notification notification) {
-        KPIsDTO kpisDTO = new KPIsDTO();
+    private KPIsDTO calculateKPIs(final Notification notification) {
+        final KPIsDTO kpisDTO = new KPIsDTO();
 
-        long totalUsers = userRepository.count();
+        kpisDTO.setInProgress(notification.getEndTime() == null);
 
-        long totalEmailNotifications = notification.getSentNotifications().stream()
-                .filter(sentNotification -> sentNotification.getChannel().getName().equalsIgnoreCase("EMAIL"))
+        final long totalUsers = userRepository.count();
+
+        final long totalEmailNotifications = notification.getSentNotifications().stream()
+                .filter(sentNotification -> sentNotification.getChannel().getName()
+                        .equalsIgnoreCase(ApiConstants.BROADCAST_CHANNEL_EMAIL))
                 .count();
 
-        long totalSmsNotifications = notification.getSentNotifications().stream()
-                .filter(sentNotification -> sentNotification.getChannel().getName().equalsIgnoreCase("SMS"))
+        final long totalSmsNotifications = notification.getSentNotifications().stream()
+                .filter(sentNotification -> sentNotification.getChannel().getName()
+                        .equalsIgnoreCase(ApiConstants.BROADCAST_CHANNEL_SMS))
                 .count();
 
-        long totalPushNotifications = notification.getSentNotifications().stream()
-                .filter(sentNotification -> sentNotification.getChannel().getName().equalsIgnoreCase("PUSH_NOTIFICATION"))
+        final long totalPushNotifications = notification.getSentNotifications().stream()
+                .filter(sentNotification -> sentNotification.getChannel().getName()
+                        .equalsIgnoreCase(ApiConstants.BROADCAST_CHANNEL_PUSH_NOTIFICATIONS))
                 .count();
 
-        KPITypeDTO users = new KPITypeDTO("USERS", totalUsers);
-        KPITypeDTO emailNotifications = new KPITypeDTO("EMAIL_NOTIFICATIONS", totalEmailNotifications);
-        KPITypeDTO smsNotifications = new KPITypeDTO("SMS_NOTIFICATIONS", totalSmsNotifications);
-        KPITypeDTO pushNotifications = new KPITypeDTO("PUSH_NOTIFICATIONS", totalPushNotifications);
+        final KPITypeDTO users = new KPITypeDTO(ApiConstants.KPIS_USERS_TITLE, totalUsers);
+        final KPITypeDTO emailNotifications = new KPITypeDTO(ApiConstants.KPIS_EMAIL_NOTIFICATIONS, totalEmailNotifications);
+        final KPITypeDTO smsNotifications = new KPITypeDTO(ApiConstants.KPIS_SMS_NOTIFICATIONS, totalSmsNotifications);
+        final KPITypeDTO pushNotifications = new KPITypeDTO(ApiConstants.KPIS_PUSH_NOTIFICATIONS, totalPushNotifications);
 
         kpisDTO.setUsers(users);
         kpisDTO.setEmailNotifications(emailNotifications);

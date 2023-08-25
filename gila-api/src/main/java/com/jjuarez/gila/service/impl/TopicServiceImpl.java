@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 public class TopicServiceImpl implements TopicService {
     private final TopicRepository topicRepository;
 
-    public TopicServiceImpl(TopicRepository topicRepository) {
+    public TopicServiceImpl(final TopicRepository topicRepository) {
         this.topicRepository = topicRepository;
     }
     @Override
-    public Topic findByName(String name) {
+    public Topic findByName(final String name) {
         return topicRepository.findByName(name).orElseThrow(() ->
                 new TopicNotFoundException("Topic not found: {}" + name));
     }

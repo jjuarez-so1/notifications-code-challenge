@@ -46,7 +46,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         final List<CompletableFuture<Void>> futures = userService.getAllUsers().stream()
                 .filter(user -> isUserSubscribedToTopic(user, request.category()))
-                .map(user -> CompletableFuture.runAsync(() -> sendNotification(user, request, notification)))
+                .map(user -> CompletableFuture.runAsync(() -> sendNotification(user, notification)))
                 .toList();
 
         final CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
@@ -56,7 +56,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<NotificationDTO> getLast5Notifications() {
         LOG.info("Fetching the las 5 notifications");
-        List<Notification> notifications = notificationRepository.findTop5ByOrderByStartTimeDesc();
+        final List<Notification> notifications = notificationRepository.findTop5ByOrderByStartTimeDesc();
         return NotificationDTO.from(notifications);
     }
 
@@ -65,10 +65,9 @@ public class NotificationServiceImpl implements NotificationService {
         return topic != null && user.isSubscribedTo(topic);
     }
 
-    private void sendNotification(final User user, final NotificationRequest request,
+    private void sendNotification(final User user,
                                   final Notification notification) {
-        notificationStrategyContext.sendNotification(user, topicService.findByName(request.category()),
-                request.message(), notification);
+        notificationStrategyContext.sendNotification(user, notification);
     }
 
     private void updateNotificationStatus(final Notification notification) {

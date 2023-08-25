@@ -9,19 +9,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
-
-interface Notification {
-  id: number;
-  topic: string;
-  message: string;
-  status: string;
-  startTime: string;
-  endTime: string;
-}
+import NotificationDTO from "../../dtos/NotificationDTO";
 
 interface ListProps {
-  notifications: Notification[];
-  setNotifications: (notifications: Notification[]) => void;
+  notifications: NotificationDTO[];
+  setNotifications: (notifications: NotificationDTO[]) => void;
   onBroadcast: () => void;
   lastRefreshed: Date | null;
 }

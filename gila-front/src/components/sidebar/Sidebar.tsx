@@ -34,11 +34,20 @@ const Sidebar = () => {
                         </li>
                     </Link>
 
-                    <p className="title">NOTIFICATIONS</p>
+                    <p className="title">BROADCAST</p>
                     <Link to="/notifications/new">
                         <li className={location.pathname === '/notifications/new' ? 'active' : ''}>
                         <CellTowerOutlinedIcon className="icon" />
                             <span>New Broadcast</span>
+                        </li>
+                    </Link>
+
+                    <p className="title">LOGS</p>
+
+                    <Link to="/messages">
+                        <li className={location.pathname === '/messages' ? 'active' : ''}>
+                            <CalendarViewMonthOutlinedIcon className="icon" />
+                            <span>Messages sent</span>
                         </li>
                     </Link>
 
@@ -50,7 +59,7 @@ const Sidebar = () => {
 
                     <li>
                         <CalendarViewMonthOutlinedIcon className="icon" />
-                        <span>Vehicula Ex</span>
+                        <span>Vehicula aphemeral</span>
                     </li>
 
                     <li>
@@ -60,7 +69,7 @@ const Sidebar = () => {
 
                     <li>
                         <EmojiEmotionsOutlinedIcon className="icon" />
-                        <span>Suspendisse</span>
+                        <span>Suspendisse Aplomb</span>
                     </li>
 
                     <li>

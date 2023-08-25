@@ -1,0 +1,15 @@
+.listContainer {
+    .last-refresh-container {
+        margin-top: -10px;
+        margin-right: 5px;
+        .myFoo {
+            display: flex;
+            align-items: center;
+            margin-left: -10px;
+            .labelForSelect {
+                font-size: 15px;
+                color: rgb(106, 112, 111);
+            }
+        }
+    }
+}

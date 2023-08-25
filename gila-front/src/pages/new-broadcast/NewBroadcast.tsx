@@ -5,18 +5,12 @@ import { useEffect, useState } from "react";
 import List from "../../components/list/List"
 import axios from "axios";
 import NewBroadcastForm from "../../components/new-broadcast-form/NewBroadcastForm";
+import NotificationDTO from "../../dtos/NotificationDTO";
 
-interface Notification {
-  id: number;
-  topic: string;
-  message: string;
-  status: string;
-  startTime: string;
-  endTime: string;
-}
+
 
 const NewBroadcast = () => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<NotificationDTO[]>([]);
   const [lastRefreshed, setLastRefreshed] = useState(new Date());
 
   useEffect(() => {
@@ -40,6 +34,7 @@ const NewBroadcast = () => {
   return (
     <div className="newBroadcast">
       <div className="newBroadcastContainer">
+      <h1 className="pageTitle">New Broadcast</h1>
         <div className="formContainer">
           <NewBroadcastForm
             onBroadcast={handleBroadcast}

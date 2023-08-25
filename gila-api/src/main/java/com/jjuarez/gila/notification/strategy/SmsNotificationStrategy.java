@@ -3,7 +3,6 @@ package com.jjuarez.gila.notification.strategy;
 import com.jjuarez.gila.entity.BroadcastChannel;
 import com.jjuarez.gila.entity.Notification;
 import com.jjuarez.gila.entity.SentNotification;
-import com.jjuarez.gila.entity.Topic;
 import com.jjuarez.gila.entity.User;
 import com.jjuarez.gila.exception.InvalidPhoneNumberException;
 import com.jjuarez.gila.notification.NotificationStrategy;

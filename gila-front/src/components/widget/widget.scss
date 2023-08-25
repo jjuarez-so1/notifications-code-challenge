@@ -1,4 +1,4 @@
-.widgett {
+.widget {
     display: flex;
     justify-content: space-between;
     flex: 1;
@@ -11,31 +11,31 @@
     border-radius: 10px;
     height: 120px;
 
-    .leftt,
-    .rightt {
+    .left,
+    .right {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
-        .titlee {
+        .title {
             font-weight: bold;
             font-size: 15px;
             color: rgb(160, 160, 107)
         }
 
-        .counterr {
+        .counter {
             font-size: 40px;
             font-weight: 300;
         }
 
-        .linkk {
+        .link {
             border-bottom: 1px solid gray;
             font-size: 12px;
             width: max-content;
         }
     }
 
-    .rightt {
+    .right {
         width: 40%;
         .icon {
             font-size: 95px;

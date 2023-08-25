@@ -104,13 +104,6 @@ public class Notification {
         sentNotification.setNotification(this);
     }
 
-    /*public static Notification from(NotificationRequest notificationRequest) {
-        return new Notification.Builder()
-                .withCategory(notificationRequest.category())
-                .withMessage(notificationRequest.message())
-                .build();
-    }*/
-
     public static Notification from(final String message, final Topic topic) {
         return new Notification.Builder()
                 .withTopic(topic)

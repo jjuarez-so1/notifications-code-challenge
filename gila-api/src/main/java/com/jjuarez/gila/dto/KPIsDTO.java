@@ -5,6 +5,7 @@ public class KPIsDTO {
     private KPITypeDTO smsNotifications;
     private KPITypeDTO emailNotifications;
     private KPITypeDTO pushNotifications;
+    private boolean inProgress;
 
     public KPITypeDTO getUsers() {
         return users;
@@ -36,5 +37,13 @@ public class KPIsDTO {
 
     public void setPushNotifications(KPITypeDTO pushNotifications) {
         this.pushNotifications = pushNotifications;
+    }
+
+    public boolean isInProgress() {
+        return inProgress;
+    }
+
+    public void setInProgress(boolean inProgress) {
+        this.inProgress = inProgress;
     }
 }

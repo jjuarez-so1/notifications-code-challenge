@@ -5,10 +5,14 @@ import { useEffect, useState } from "react";
 import Widget from "../widget/Widget"
 import { myContainer } from "../../inversify/inversify.config";
 import { TYPES } from "../../inversify/types";
-import KpiData from "./KpiData";
-import { KpiRepository } from "../../repository/KpiRepository";
+import KpiData from "../../dtos/KpiDataDTO";
+import { KpiRepository } from "../../repositories/KpiRepository";
 
-const KpiCards = () => {
+interface KpiCardsProps {
+    onProgressChange: (progressStatus: boolean) => void;
+  }
+
+const KpiCards: React.FC<KpiCardsProps> = ({ onProgressChange }) => {
     const [kpis, setKpis] = useState<KpiData|null>(null);
 
     useEffect(() => {
@@ -20,6 +24,10 @@ const KpiCards = () => {
             const myRepo = myContainer.get<KpiRepository>(TYPES.KpiRepository);
             const kpiData = await myRepo.fetchKpis();
             setKpis(kpiData);
+
+            if(kpiData && kpiData.inProgress) {
+                onProgressChange(true);
+            }
         } catch (error) {
             console.error("Error fetching KPIs:", error);
         }

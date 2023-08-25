@@ -23,7 +23,7 @@ public class KpiController {
     @GetMapping()
     public ResponseEntity<KPIsDTO> getKpis() {
         LOG.info("Requesting KPIs for last notification sent");
-        KPIsDTO returnObject = kpiService.getKpisForLastNotification();
+        final KPIsDTO returnObject = kpiService.getKpisForLastNotification();
         return ResponseEntity.ok(returnObject);
     }
 }
