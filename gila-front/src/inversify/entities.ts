@@ -2,16 +2,16 @@ import { injectable, inject } from "inversify";
 import "reflect-metadata";
 import { MessagesRepository, MessagesResponse, Notification, NotificationsRepository } from "./interfaces";
 import { TYPES } from "./types";
-import { KpiRepository } from "../repositories/KpiRepository";
+
 import KpiData from "../dtos/KpiDataDTO";
 import axios from "axios";
+import { KpiRepository } from "../repositories/KpiRepository";
 
 @injectable()
 class KpiRepositoryImpl implements KpiRepository {
     @inject(TYPES.ApiBaseUrl) private _apiUrl: string | any;
 
     async fetchKpis(): Promise<KpiData> {
-        console.log('from kpis');
         try {
             const response = await axios.get(`${this._apiUrl}/kpis`);
             return response.data;

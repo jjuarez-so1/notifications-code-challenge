@@ -44,7 +44,8 @@ public class NotificationServiceImpl implements NotificationService {
                 topicService.findByName(request.category()));
         notificationRepository.save(notification);
 
-        final List<CompletableFuture<Void>> futures = userService.getAllUsers().stream()
+        final List<CompletableFuture<Void>> futures = userService
+                .getUsersBySubscribedTopic(topicService.findByName(request.category())).stream()
                 .filter(user -> isUserSubscribedToTopic(user, request.category()))
                 .map(user -> CompletableFuture.runAsync(() -> sendNotification(user, notification)))
                 .toList();

@@ -1,5 +1,6 @@
 package com.jjuarez.gila.service.impl;
 
+import com.jjuarez.gila.entity.Topic;
 import com.jjuarez.gila.entity.User;
 import com.jjuarez.gila.repository.UserRepository;
 import com.jjuarez.gila.service.UserService;
@@ -17,5 +18,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getUsersBySubscribedTopic(final Topic topic) {
+        return userRepository.findBySubscribedTopicsContaining(topic);
     }
 }

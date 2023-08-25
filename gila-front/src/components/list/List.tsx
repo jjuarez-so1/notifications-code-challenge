@@ -64,7 +64,7 @@ const List: React.FC<ListProps> = ({ notifications, setNotifications, onBroadcas
                 <TableCell>{row.message}</TableCell>
                 <TableCell>{row.status}</TableCell>
                 <TableCell>{row.startTime}</TableCell>
-                <TableCell>{row.endTime}</TableCell>
+                <TableCell>{row.endTime ? row.endTime : "-"}</TableCell>
               </TableRow>
             ))}
           </TableBody>
